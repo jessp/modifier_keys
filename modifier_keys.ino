@@ -50,7 +50,7 @@ void setup()
 
 void loop() {
   check_switches();      // when we check the switches we'll get the current state
-  
+  /*
   for (byte i = 0; i < NUMBUTTONS; i++) {
     if (justPressed[i]) {
       Serial.print(i, DEC);
@@ -68,4 +68,43 @@ void loop() {
       // is the button pressed down at this moment
     }
   }
+  */
+  if (check_alphabet() != '/'){
+    Serial.println(check_alphabet()); 
+  }
 }
+
+char check_alphabet(){
+  int leftHandButton = 1000;
+  int rightHandButton = 1000;
+  int leftHandButtonPrev = 1000;
+  int rightHandButtonPrev = 1000;
+  
+  for (byte i = 0; i < 5; i++) {
+    if (pressed[i]){
+      leftHandButton = i;
+    }
+  }
+  
+  for (byte i = 5; i < 10; i++) {
+    if (pressed[i]){
+      rightHandButton = i - 5;
+    }
+  }
+
+  leftHandButtonPrev = leftHandButton;
+  rightHandButtonPrev = rightHandButton;
+  
+  if (leftHandButton != 1000 && rightHandButton != 1000){
+    return codedChars[leftHandButton][rightHandButton];
+  } else if (leftHandButton == 1000 && rightHandButton != 1000){
+    return rightHandChars[rightHandButton];
+  } else if (leftHandButton != 1000 && rightHandButton == 1000){
+    return leftHandChars[leftHandButton];
+  } else {
+    return '/';
+  }
+  
+}
+
+
