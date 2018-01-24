@@ -18,7 +18,7 @@ byte buttons[] = {15, 16, 17, 18, 19, 9, 10, 11, 12, 13};
  **/
 
 //switch stuff used in check_switches file
-#define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
+#define DEBOUNCE 100  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 
 // here is where we define the buttons that we'll use. button "1" is the first, button "6" is the 6th, etc
 // This handy macro lets us determine how big the array up above is, by checking the size
@@ -81,13 +81,13 @@ char check_alphabet(){
   int rightHandButtonPrev = 1000;
   
   for (byte i = 0; i < 5; i++) {
-    if (pressed[i]){
+    if (pressed[i] || justPressed[i] || justReleased[i]){
       leftHandButton = i;
     }
   }
   
   for (byte i = 5; i < 10; i++) {
-    if (pressed[i]){
+    if (pressed[i] || justPressed[i] || justReleased[i]){
       rightHandButton = i - 5;
     }
   }
