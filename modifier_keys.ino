@@ -10,6 +10,12 @@ const char codedChars[3][5] = {
     {'V', 'W', 'X', 'Y', 'Z'}
 };
 
+int leftHandButton = 1000;
+int rightHandButton = 1000;
+int leftHandButtonPrev;
+int rightHandButtonPrev;
+  
+
 //
 byte buttons[] = {15, 16, 17, 18, 19, 9, 10, 11, 12, 13}; 
 /**
@@ -18,7 +24,7 @@ byte buttons[] = {15, 16, 17, 18, 19, 9, 10, 11, 12, 13};
  **/
 
 //switch stuff used in check_switches file
-#define DEBOUNCE 100  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
+#define DEBOUNCE 200  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 
 // here is where we define the buttons that we'll use. button "1" is the first, button "6" is the 6th, etc
 // This handy macro lets us determine how big the array up above is, by checking the size
@@ -75,32 +81,55 @@ void loop() {
 }
 
 char check_alphabet(){
-  int leftHandButton = 1000;
-  int rightHandButton = 1000;
-  int leftHandButtonPrev = 1000;
-  int rightHandButtonPrev = 1000;
-  
+  int firstLeftButtonPressed = 1500;
+  int firstRightButtonPressed = 1500;
+  leftHandButton = 1000; 
+  rightHandButton = 1000;  
+
+
   for (byte i = 0; i < 5; i++) {
+    
     if (pressed[i] || justPressed[i] || justReleased[i]){
-      leftHandButton = i;
-    }
+      if (firstLeftButtonPressed < 1000){
+        leftHandButton = 1500; 
+        break;
+      } else {
+        leftHandButton = i;
+        firstLeftButtonPressed = i;
+      }
+    } 
   }
   
   for (byte i = 5; i < 10; i++) {
+
+    
     if (pressed[i] || justPressed[i] || justReleased[i]){
-      rightHandButton = i - 5;
-    }
+      if (firstRightButtonPressed != 1500){
+        rightHandButton = 1500; 
+        break;
+      } else {
+        rightHandButton = i - 5;
+        firstRightButtonPressed = i - 5;
+      }
+    } 
   }
 
   leftHandButtonPrev = leftHandButton;
   rightHandButtonPrev = rightHandButton;
   
-  if (leftHandButton != 1000 && rightHandButton != 1000){
+
+  if (leftHandButton < 1000 && rightHandButton < 1000){
     return codedChars[leftHandButton][rightHandButton];
-  } else if (leftHandButton == 1000 && rightHandButton != 1000){
+  } else if (leftHandButton == 1000 && rightHandButton < 1000){
     return rightHandChars[rightHandButton];
-  } else if (leftHandButton != 1000 && rightHandButton == 1000){
+  } else if (leftHandButton < 1000 && rightHandButton == 1000){
     return leftHandChars[leftHandButton];
+  } else if (leftHandButton == 1500 && rightHandButton == 1500){
+    return ' ';
+  } else if (leftHandButton == 1500 && rightHandButton == 1000){
+    return '['; //bkspc
+  } else if (leftHandButton == 1000 && rightHandButton == 1500){
+    return ']'; //bkspc
   } else {
     return '/';
   }
