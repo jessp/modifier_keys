@@ -24,7 +24,7 @@ byte buttons[] = {15, 16, 17, 18, 19, 9, 10, 11, 12, 13};
  **/
 
 //switch stuff used in check_switches file
-#define DEBOUNCE 200  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
+#define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 
 // here is where we define the buttons that we'll use. button "1" is the first, button "6" is the 6th, etc
 // This handy macro lets us determine how big the array up above is, by checking the size
@@ -56,25 +56,7 @@ void setup()
 
 void loop() {
   check_switches();      // when we check the switches we'll get the current state
-  /*
-  for (byte i = 0; i < NUMBUTTONS; i++) {
-    if (justPressed[i]) {
-      Serial.print(i, DEC);
-      Serial.println(" Just pressed");
-       //remember, check_switches() will CLEAR the 'just pressed' flag
-    }
-    if (justReleased[i]) {
-      Serial.print(i, DEC);
-      Serial.println(" Just released");
-      // remember, check_switches() will CLEAR the 'just pressed' flag
-    }
-    if (pressed[i]) {
-      Serial.print(i, DEC);
-      Serial.println(" pressed");
-      // is the button pressed down at this moment
-    }
-  }
-  */
+  
   if (check_alphabet() != '/'){
     Serial.println(check_alphabet()); 
   }
@@ -89,7 +71,7 @@ char check_alphabet(){
 
   for (byte i = 0; i < 5; i++) {
     
-    if (pressed[i] || justPressed[i] || justReleased[i]){
+    if (justPressed[i]){
       if (firstLeftButtonPressed < 1000){
         leftHandButton = 1500; 
         break;
@@ -101,9 +83,8 @@ char check_alphabet(){
   }
   
   for (byte i = 5; i < 10; i++) {
-
     
-    if (pressed[i] || justPressed[i] || justReleased[i]){
+    if (justPressed[i]){
       if (firstRightButtonPressed != 1500){
         rightHandButton = 1500; 
         break;
@@ -125,11 +106,11 @@ char check_alphabet(){
   } else if (leftHandButton < 1000 && rightHandButton == 1000){
     return leftHandChars[leftHandButton];
   } else if (leftHandButton == 1500 && rightHandButton == 1500){
-    return ' ';
+    return ' '; //enter
   } else if (leftHandButton == 1500 && rightHandButton == 1000){
     return '['; //bkspc
   } else if (leftHandButton == 1000 && rightHandButton == 1500){
-    return ']'; //bkspc
+    return ']'; //space
   } else {
     return '/';
   }

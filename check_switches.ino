@@ -9,14 +9,14 @@ void check_switches()
   
   if ((lastTime + DEBOUNCE) > millis()) {
     // not enough time has passed to debounce
-    /*
+    
     //but set justPressed to false so doesn't double fire
     for (index = 0; index < NUMBUTTONS; index++) { 
         if (previousState[index] == 0 && currentState[index] == 0){
           justPressed[index] = 0; 
        }
     }
-    */
+    
     return; 
   }
   // ok we have waited DEBOUNCE milliseconds, lets reset the timer
@@ -38,10 +38,11 @@ void check_switches()
           justReleased[index] = 1;
       }
       pressed[index] = !currentState[index];  // remember, digital HIGH means NOT pressed
+
     }
     previousState[index] = currentState[index];   // keep a running tally of the buttons
 
   }
-  
+
 }
 
