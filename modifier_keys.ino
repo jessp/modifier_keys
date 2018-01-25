@@ -85,7 +85,7 @@ char check_alphabet(){
   for (byte i = 5; i < 10; i++) {
     
     if (justPressed[i]){
-      if (firstRightButtonPressed != 1500){
+      if (firstRightButtonPressed < 1500){
         rightHandButton = 1500; 
         break;
       } else {
