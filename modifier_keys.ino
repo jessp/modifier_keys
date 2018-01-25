@@ -34,6 +34,13 @@ byte pressed[NUMBUTTONS];
 byte justPressed[NUMBUTTONS];
 byte justReleased[NUMBUTTONS];
 
+unsigned long buttonTimes[NUMBUTTONS];
+byte enteredChar[NUMBUTTONS];
+int leftHandFinger = 5000;
+int rightHandFinger = 5000;
+byte lastChar = "%";
+
+
 void setup() 
 {
   byte i;
@@ -56,10 +63,12 @@ void setup()
 
 void loop() {
   check_switches();      // when we check the switches we'll get the current state
-  
-  if (check_alphabet() != '/'){
-    Serial.println(check_alphabet()); 
-  }
+  check_times();
+
+  check_alpha();
+//  if (check_alphabet() != '/'){
+//    Serial.println(check_alphabet()); 
+//  }
 }
 
 char check_alphabet(){
