@@ -51,30 +51,20 @@ void check_alpha() {
 
   }
 
-if (leftHandCounter != 0 || rightHandCounter != 0){
-  /*
-  Serial.print(leftHandCounter);
-  Serial.print(" ");
-  Serial.print(leftHandFinger);
-  Serial.print(" ");
-  Serial.print(rightHandCounter);
-  Serial.print(" ");
-  Serial.println(rightHandFinger);
-  */
-    
+if (leftHandCounter != 0 || rightHandCounter != 0){    
     if (leftHandCounter > 1 && rightHandCounter > 1){
      
-      if (lastChar != "/"){
+      if (lastChar != 92){
         lastChar = "/";
         Serial.println("/"); //enter
       }
     } else if (rightHandCounter > 1){
-      if (lastChar != " "){
+      if (lastChar != 78){
         lastChar = " ";
         Serial.print(" "); //space
       }
     } else if (leftHandCounter > 1){
-      if (lastChar != "\\"){
+      if (lastChar != 94){
         lastChar = "\\";
         Serial.print("\\"); //bkspc
       }
