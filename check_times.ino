@@ -5,6 +5,7 @@ void check_times()
     if (!digitalRead(buttons[index])) {
       buttonTimes[index] = millis();
     } 
+    
   }
 
   
@@ -12,14 +13,13 @@ void check_times()
 
 void check_alpha() {
   int leftHandCounter = 0;
-//  bool justPressedLeft = false;
   int rightHandCounter = 0;
-//  bool justPressedRight = false;
+
 
   
   
   for (byte index = 0; index < 5; index++) {
-    if (millis() - buttonTimes[index] > 50) {
+    if (millis() - buttonTimes[index] > 10) {
       leftHandCounter ++;      
       if (enteredChar[index] == false){
         leftHandFinger = index;
@@ -35,7 +35,7 @@ void check_alpha() {
 
 
   for (byte index = 5; index < 10; index++) {
-    if (millis() - buttonTimes[index] > 50) {
+    if (millis() - buttonTimes[index] > 10) {
       rightHandCounter ++;      
       if (enteredChar[index] == false){
         rightHandFinger = index - 5;
@@ -45,7 +45,6 @@ void check_alpha() {
         break;
       }   
     } else {
-//      rightHandFinger = 5000;
       enteredChar[index] = false;
     }
 
@@ -68,18 +67,26 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
         lastChar = "\\";
         Serial.print("\\"); //bkspc
       }
-    } else if (leftHandCounter == 1 && rightHandCounter == 1){
+    }
+    
+    else if (leftHandCounter == 1 && rightHandCounter == 1){
       if (lastChar != codedChars[leftHandFinger][rightHandFinger]){
         lastChar = codedChars[leftHandFinger][rightHandFinger];
         Serial.print(codedChars[leftHandFinger][rightHandFinger]);
       }
     } else if (leftHandCounter == 0 && rightHandFinger < 1000) {
-      if (lastChar != rightHandChars[rightHandFinger]){
+        byte leftPins[5] = {0, 1, 2, 3, 4};  
+        boolean any = anyTimes(leftPins);
+
+      if (justPressed[rightHandFinger + 5]){
         lastChar = rightHandChars[rightHandFinger];
         Serial.print(rightHandChars[rightHandFinger]);
       }
     } else if (rightHandCounter == 0 && leftHandFinger < 1000) {
-      if (lastChar != leftHandChars[leftHandFinger]){
+       byte rightPins[5] = {5, 6, 7, 8, 9};  
+       boolean any = anyTimes(rightPins);
+
+      if (justPressed[leftHandFinger]){
         lastChar = leftHandChars[leftHandFinger];
         Serial.print(leftHandChars[leftHandFinger]);
       }
@@ -91,5 +98,15 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
    lastChar = "%";
 }
   
+}
+
+
+boolean anyTimes(byte pins[]){
+   for (byte pin = 0; pin < 5; pin++){
+//      if (justReleased[pins[pin]]){
+//        return true;
+//      }
+   }
+  return false;
 }
 

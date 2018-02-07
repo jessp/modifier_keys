@@ -35,6 +35,9 @@ byte justPressed[NUMBUTTONS];
 byte justReleased[NUMBUTTONS];
 
 unsigned long buttonTimes[NUMBUTTONS];
+unsigned long buttonReleaseTimes[NUMBUTTONS];
+
+unsigned long buttonTimesPrev[NUMBUTTONS];
 byte enteredChar[NUMBUTTONS];
 int leftHandFinger = 5000;
 int rightHandFinger = 5000;
@@ -66,64 +69,6 @@ void loop() {
   check_times();
 
   check_alpha();
-//  if (check_alphabet() != '/'){
-//    Serial.println(check_alphabet()); 
-//  }
+
 }
-
-char check_alphabet(){
-  int firstLeftButtonPressed = 1500;
-  int firstRightButtonPressed = 1500;
-  leftHandButton = 1000; 
-  rightHandButton = 1000;  
-
-
-  for (byte i = 0; i < 5; i++) {
-    
-    if (justPressed[i]){
-      if (firstLeftButtonPressed < 1000){
-        leftHandButton = 1500; 
-        break;
-      } else {
-        leftHandButton = i;
-        firstLeftButtonPressed = i;
-      }
-    } 
-  }
-  
-  for (byte i = 5; i < 10; i++) {
-    
-    if (justPressed[i]){
-      if (firstRightButtonPressed < 1500){
-        rightHandButton = 1500; 
-        break;
-      } else {
-        rightHandButton = i - 5;
-        firstRightButtonPressed = i - 5;
-      }
-    } 
-  }
-
-  leftHandButtonPrev = leftHandButton;
-  rightHandButtonPrev = rightHandButton;
-  
-
-  if (leftHandButton < 1000 && rightHandButton < 1000){
-    return codedChars[leftHandButton][rightHandButton];
-  } else if (leftHandButton == 1000 && rightHandButton < 1000){
-    return rightHandChars[rightHandButton];
-  } else if (leftHandButton < 1000 && rightHandButton == 1000){
-    return leftHandChars[leftHandButton];
-  } else if (leftHandButton == 1500 && rightHandButton == 1500){
-    return ' '; //enter
-  } else if (leftHandButton == 1500 && rightHandButton == 1000){
-    return '['; //bkspc
-  } else if (leftHandButton == 1000 && rightHandButton == 1500){
-    return ']'; //space
-  } else {
-    return '/';
-  }
-  
-}
-
 
