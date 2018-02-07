@@ -5,7 +5,7 @@ const char leftHandChars[5] = {'A', 'E', 'I', 'O', 'U'};
 const char rightHandChars[5] = {'B', 'C', 'D', 'F', 'G'};
 
 const char codedChars[3][5] = {
-    {'H', 'J', 'L', 'M', 'N'}, //rightHand 0, leftHand 0 ==H
+    {'H', 'J', 'L', 'M', 'N'}, //rightHand 0, leftHand 0 == H
     {'P', 'Q', 'R', 'S', 'T'},
     {'V', 'W', 'X', 'Y', 'Z'}
 };
@@ -24,7 +24,7 @@ byte buttons[] = {15, 16, 17, 18, 19, 9, 10, 11, 12, 13};
  **/
 
 //switch stuff used in check_switches file
-#define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
+#define DEBOUNCE 50  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 
 // here is where we define the buttons that we'll use. button "1" is the first, button "6" is the 6th, etc
 // This handy macro lets us determine how big the array up above is, by checking the size

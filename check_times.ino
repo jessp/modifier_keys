@@ -70,22 +70,25 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
     }
     
     else if (leftHandCounter == 1 && rightHandCounter == 1){
-      if (lastChar != codedChars[leftHandFinger][rightHandFinger]){
+      Serial.print("left: ");
+      Serial.println(justPressed[leftHandFinger]);
+      Serial.print(" ");
+      Serial.print("right: ");
+      Serial.println(justPressed[rightHandFinger + 5]);
+      Serial.print(" ");
+      
+      if (justPressed[leftHandFinger] || justPressed[rightHandFinger + 5]){
         lastChar = codedChars[leftHandFinger][rightHandFinger];
         Serial.print(codedChars[leftHandFinger][rightHandFinger]);
       }
+      
     } else if (leftHandCounter == 0 && rightHandFinger < 1000) {
-        byte leftPins[5] = {0, 1, 2, 3, 4};  
-        boolean any = anyTimes(leftPins);
-
       if (justPressed[rightHandFinger + 5]){
         lastChar = rightHandChars[rightHandFinger];
         Serial.print(rightHandChars[rightHandFinger]);
       }
     } else if (rightHandCounter == 0 && leftHandFinger < 1000) {
-       byte rightPins[5] = {5, 6, 7, 8, 9};  
-       boolean any = anyTimes(rightPins);
-
+       
       if (justPressed[leftHandFinger]){
         lastChar = leftHandChars[leftHandFinger];
         Serial.print(leftHandChars[leftHandFinger]);
@@ -100,13 +103,4 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
   
 }
 
-
-boolean anyTimes(byte pins[]){
-   for (byte pin = 0; pin < 5; pin++){
-//      if (justReleased[pins[pin]]){
-//        return true;
-//      }
-   }
-  return false;
-}
 
