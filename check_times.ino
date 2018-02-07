@@ -72,15 +72,12 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
     else if (leftHandCounter == 1 && rightHandCounter == 1){
       //it's impossible to press two keys at the same time, so if two keys are pressed more than 200 ms, insert a delete character
       //in order to remove the character inserted by the first pressed character
-      if (justPressed[leftHandFinger]){
-         if (millis() - buttonTimes[rightHandFinger + 5] > 200){
+      
+      if (justPressed[leftHandFinger] && !justPressed[rightHandFinger + 5]){
             Serial.print("\\");
-         }
       }
-      if (justPressed[rightHandFinger + 5]){
-         if (millis() - buttonTimes[leftHandFinger] > 200){
+      if (!justPressed[leftHandFinger] && justPressed[rightHandFinger + 5]){
             Serial.print("\\");
-         }
       }
       
       if (justPressed[leftHandFinger] || justPressed[rightHandFinger + 5]){
