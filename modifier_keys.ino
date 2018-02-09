@@ -35,12 +35,11 @@ byte justPressed[NUMBUTTONS];
 byte justReleased[NUMBUTTONS];
 
 unsigned long buttonTimes[NUMBUTTONS];
-unsigned long buttonReleaseTimes[NUMBUTTONS];
 
 unsigned long buttonTimesPrev[NUMBUTTONS];
-byte enteredChar[NUMBUTTONS];
-int leftHandFinger = 5000;
-int rightHandFinger = 5000;
+byte enteredChar[NUMBUTTONS]; //have we entered a character with this finger
+int leftHandFinger = 5000; //variable keeping track of last pressed key on left hand
+int rightHandFinger = 5000; //variable keeping track of last pressed key on right hand
 byte lastChar = "%";
 
 
