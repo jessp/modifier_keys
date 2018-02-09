@@ -56,11 +56,13 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
         byte leftPins[] = {0, 1, 2, 3, 4};
         
         if (!moreThanOnePressed(rightPins) || !moreThanOnePressed(leftPins)){
-           Serial.print("<");
+            myMessage = deleteChar(myMessage);
+//          Serial.print("<");
         }
         
         lastChar = "/";
-        Serial.println("/"); //enter
+//        Serial.println("/"); //enter
+        myMessage = "";
       }
     } else if (rightHandCounter > 1){
       if (lastChar != 94 && lastChar != 106){
@@ -68,10 +70,12 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
         //check if this is just residual key press from lifting fingers for enter character
         if (atLeastOneJustPressed(rightPins)){
           if (!moreThanOnePressed(rightPins)){
-            Serial.print("<");
+//            Serial.print("<");
+            myMessage = deleteChar(myMessage);
           }
           lastChar = "]";
-          Serial.print("]"); //space
+//          Serial.print("]"); //space
+          myMessage = myMessage + " ";
         }
       }
     } else if (leftHandCounter > 1){
@@ -79,10 +83,12 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
         byte leftPins[] = {0, 1, 2, 3, 4};
         if (atLeastOneJustPressed(leftPins)){
           if (!moreThanOnePressed(leftPins)){
-            Serial.print("<");
+//            Serial.print("<");
+              myMessage = deleteChar(myMessage);
           }
           lastChar = "[";
-          Serial.print("["); //bkspc
+//          Serial.print("["); //bkspc
+          myMessage = deleteChar(myMessage);
         }
       }
     }
@@ -93,24 +99,29 @@ if (leftHandCounter != 0 || rightHandCounter != 0){
       
       if ((justPressed[leftHandFinger] && !justPressed[rightHandFinger + 5]) ||
           (!justPressed[leftHandFinger] && justPressed[rightHandFinger + 5])){
-            Serial.print("<");
+            myMessage = deleteChar(myMessage);
+//            Serial.print("<");
       }
       
       if (justPressed[leftHandFinger] || justPressed[rightHandFinger + 5]){
         lastChar = codedChars[leftHandFinger][rightHandFinger];
-        Serial.print(codedChars[leftHandFinger][rightHandFinger]);
+        myMessage = myMessage + codedChars[leftHandFinger][rightHandFinger];
+//        Serial.print(codedChars[leftHandFinger][rightHandFinger]);
       }
       
     } else if (leftHandCounter == 0 && rightHandFinger < 1000) {
       if (justPressed[rightHandFinger + 5]){
         lastChar = rightHandChars[rightHandFinger];
-        Serial.print(rightHandChars[rightHandFinger]);
+//        Serial.print(rightHandChars[rightHandFinger]);
+        myMessage = myMessage + rightHandChars[rightHandFinger];
       }
     } else if (rightHandCounter == 0 && leftHandFinger < 1000) {
        
       if (justPressed[leftHandFinger]){
         lastChar = leftHandChars[leftHandFinger];
-        Serial.print(leftHandChars[leftHandFinger]);
+//        Serial.print(leftHandChars[leftHandFinger]);
+        myMessage = myMessage + leftHandChars[leftHandFinger];
+        
       }
     } else {
       lastChar = "%";
@@ -149,5 +160,12 @@ boolean atLeastOneJustPressed(byte pins[]){
     }
   }
   return false;
+}
+
+String deleteChar(String message){
+  if (message.length() > 0){
+    message.remove(message.length()-1);
+  }
+  return message;
 }
 

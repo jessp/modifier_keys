@@ -14,6 +14,7 @@ int leftHandButton = 1000;
 int rightHandButton = 1000;
 int leftHandButtonPrev;
 int rightHandButtonPrev;
+
   
 
 //
@@ -42,6 +43,7 @@ int leftHandFinger = 5000; //variable keeping track of last pressed key on left 
 int rightHandFinger = 5000; //variable keeping track of last pressed key on right hand
 byte lastChar = "%";
 
+String myMessage = "";
 
 void setup() 
 {
@@ -49,12 +51,8 @@ void setup()
   
   // set up serial port
   Serial.begin(9600);
-  Serial.print("Button checker with ");
-  Serial.print(NUMBUTTONS, DEC);
-  Serial.println(" buttons");
+  Serial.print("******");
 
-  // pin13 LED
-  pinMode(13, OUTPUT);
  
   // Make input & enable pull-up resistors on switch pins
   for (byte i=0; i < NUMBUTTONS; i++) {
@@ -68,6 +66,7 @@ void loop() {
   check_times();
 
   check_alpha();
+  Serial.println(myMessage);
 
 }
 
